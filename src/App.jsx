@@ -8,20 +8,22 @@ import { saveGameToStorage, resetGameStorage } from "./utils/storage/index.js"
 
 function App() {
 
+  // estado del juego
   const [board, setBoard] = useState(() => {
     const boardFromStorage = window.localStorage.getItem('board')
     if (boardFromStorage) return JSON.parse(boardFromStorage)
-    return Array(9).fill(null)
+    return Array(9).fill(null) // si no hay partida guardada es un tablero vacío
   })
 
+  // estado del turno
   const [turn, setTurn] = useState(() => {
     const turnFromStorage = window.localStorage.getItem('turn')
-    return turnFromStorage ?? TURNS.X
+    return turnFromStorage ?? TURNS.X // si no hay turnos guardados, es X
   })
 
   const [winner, setWinner] = useState(null) // null es que no hay ganador, false es que hay empate y true es que hay un ganador
 
-  const resetGame = () => {
+  const resetGame = () => { // reiniciar el juego
     setBoard(Array(9).fill(null))
     setTurn(TURNS.X)
     setWinner(null)
@@ -81,6 +83,7 @@ function App() {
         }
       </section>
 
+      {/* mostrar el turno */}
       <section className="turn">
         <Square isSelected={turn === TURNS.X}>
           {TURNS.X}
